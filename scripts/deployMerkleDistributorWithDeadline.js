@@ -7,7 +7,8 @@ async function main() {
   const merkleDistributorWithDeadline = await MerkleDistributorWithDeadline.deploy(
     process.env.DEPLOY_TOKEN,
     process.env.DEPLOY_ROOT,
-    1688493524
+    1688493524,
+    process.env.TX_SIGNER_ADDRESS
   )
   await merkleDistributorWithDeadline.deployed()
   console.log(`merkleDistributorWithDeadline deployed at ${merkleDistributorWithDeadline.address}`)
