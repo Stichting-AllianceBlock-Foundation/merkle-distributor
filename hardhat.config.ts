@@ -2,6 +2,7 @@
  * @type import('hardhat/config').HardhatUserConfig
  */
 require('dotenv').config()
+import { NEXERA_CHAINS } from '@nexeraprotocol/nexera-id-sig-gating-contracts-sdk/lib'
 import '@nomiclabs/hardhat-ethers'
 import '@nomiclabs/hardhat-waffle'
 
@@ -36,9 +37,16 @@ module.exports = {
       url: `https://mainnet.infura.io/v3/${process.env.INFURA_KEY}`, // or any other JSON-RPC provider
       accounts: process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
     },
-    mumbai: {
-      url: `https://rpc-mumbai.maticvigil.com`, // or any other JSON-RPC provider
-      accounts: process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
+    //testnets
+    polygonAmoy: {
+      chainId: Number(NEXERA_CHAINS.POLYGON_AMOY),
+      url: `${process.env.AMOY_PROVIDER_URL}`,
+      accounts: { mnemonic: process.env.TEST_MNEMONIC },
+    },
+    sepolia: {
+      chainId: Number(NEXERA_CHAINS.SEPOLIA),
+      url: process.env.SEPOLIA_PROVIDER_URL,
+      accounts: { mnemonic: process.env.TEST_MNEMONIC },
     },
   },
 }
