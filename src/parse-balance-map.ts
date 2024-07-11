@@ -61,19 +61,6 @@ export function parseBalanceMap(balances: OldFormat | NewFormat[]): MerkleDistri
   const sortedAddresses = Object.keys(dataByAddress).sort()
 
   const treeInput = sortedAddresses.map((address) => ({ account: address, amount: dataByAddress[address].amount }))
-  console.log(
-    'treeInput',
-    JSON.stringify(
-      treeInput.map((v) => {
-        return { account: v.account, amount: Number(v.amount) }
-      }),
-      null,
-      2
-    )
-  )
-  treeInput.map((addy) => {
-    console.log(`  "${addy.account}": ${Number(addy.amount)},`)
-  })
 
   // construct a tree
   const tree = new BalanceTree(treeInput)
