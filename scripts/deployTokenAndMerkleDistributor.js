@@ -7,10 +7,11 @@ const DISTRIBUTOR_INIT_BALANCE = 1000000
 async function main() {
   // Deploy example token
   const tokenFactory = await ethers.getContractFactory('TestERC20')
-  const token = await tokenFactory.deploy('Token', 'TKN', 0)
+  const token = await tokenFactory.deploy('AidropToken', 'ATKN', 0)
   console.log(`Example token deployed at ${token.address}`)
 
   // Deploy Merkle Distributor
+  console.log('inputs for merkleDistributor: ', token.address, process.env.DEPLOY_ROOT, process.env.TX_SIGNER_ADDRESS)
   const MerkleDistributor = await ethers.getContractFactory('MerkleDistributor')
   const merkleDistributor = await MerkleDistributor.deploy(
     token.address,

@@ -60,14 +60,10 @@ export function parseBalanceMap(balances: OldFormat | NewFormat[]): MerkleDistri
 
   const sortedAddresses = Object.keys(dataByAddress).sort()
 
-  const treeInput = sortedAddresses.map((address) => ({ account: address, amount: dataByAddress[address].amount }));
-
-  console.log(treeInput);
+  const treeInput = sortedAddresses.map((address) => ({ account: address, amount: dataByAddress[address].amount }))
 
   // construct a tree
-  const tree = new BalanceTree(
-    treeInput
-  )
+  const tree = new BalanceTree(treeInput)
 
   // generate claims
   const claims = sortedAddresses.reduce<{

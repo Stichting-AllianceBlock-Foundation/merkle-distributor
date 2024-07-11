@@ -5,6 +5,7 @@ require('dotenv').config()
 import { NEXERA_CHAINS } from '@nexeraprotocol/nexera-id-sig-gating-contracts-sdk/lib'
 import '@nomiclabs/hardhat-ethers'
 import '@nomiclabs/hardhat-waffle'
+import '@nomicfoundation/hardhat-verify'
 
 module.exports = {
   solidity: {
@@ -19,6 +20,22 @@ module.exports = {
         },
       },
     ],
+  },
+  etherscan: {
+    apiKey: {
+      polygon: `${process.env.ETHERSCAN_POLYGON_MAINNET_API_KEY}`,
+      polygonAmoy: `${process.env.ETHERSCAN_POLYGON_MAINNET_API_KEY}`,
+      base: `${process.env.ETHERSCAN_BASE_API_KEY}`,
+      bsc: `${process.env.ETHERSCAN_BSC_API_KEY}`,
+      mainnet: `${process.env.ETHERSCAN_ETHEREUM_API_KEY}`,
+      sepolia: `${process.env.ETHERSCAN_ETHEREUM_API_KEY}`,
+      optimisticEthereum: `${process.env.ETHERSCAN_OPTIMISM_API_KEY}`,
+    },
+  },
+  sourcify: {
+    // Disabled by default
+    // Doesn't need an API key
+    enabled: true,
   },
   networks: {
     hardhat: {
