@@ -24,11 +24,12 @@
     "generate-merkle-root": "ts-node scripts/generate-merkle-root.ts",
     "generate-merkle-root:input": "ts-node scripts/generate-merkle-root.ts --input outputFiles/allowListObj.json",
     "convert-csv-to-json": "ts-node scripts/convert-csv-to-json.ts",
+    "prepare-merkle-root": "yarn convert-csv-to-json && yarn generate-merkle-root:input",
     "prepublishOnly": "yarn test",
     "pretest": "yarn compile",
     "test": "npx hardhat test",
-    "deploy-polygonAmoy": "yarn hardhat run ./scripts/deployTokenAndMerkleDistributor.ts --network polygonAmoy",
-    "deploy-sepolia": "yarn hardhat run ./scripts/deployTokenAndMerkleDistributor.ts --network sepolia"
+    "deploy-polygonAmoy": "yarn prepare-merkle-root && yarn hardhat run ./scripts/deployTokenAndMerkleDistributor.ts --network polygonAmoy",
+    "deploy-sepolia": "yarn prepare-merkle-root && yarn hardhat run ./scripts/deployTokenAndMerkleDistributor.ts --network sepolia"
   },
   "dependencies": {
     "@nexeraprotocol/nexera-id-sig-gating-contracts": "^2.2.45",

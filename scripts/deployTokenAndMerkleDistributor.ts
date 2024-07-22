@@ -45,6 +45,12 @@ async function main() {
   // set Balance for distributor to a million
   await token.setBalance(merkleDistributor.address, DISTRIBUTOR_INIT_BALANCE)
   console.log(`Set Distributor balance to ${DISTRIBUTOR_INIT_BALANCE}`)
+
+  // Save deployed addresses in the outputFiles
+  fs.writeFileSync(
+    `outputFiles/deployment-${new Date().toISOString()}`,
+    JSON.stringify({ tokenAddress: token.address, merkleDistributorAddress: merkleDistributor.address })
+  )
 }
 
 main()
