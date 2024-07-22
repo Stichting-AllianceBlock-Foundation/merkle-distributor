@@ -4,8 +4,6 @@ require('dotenv').config()
 import '@nomiclabs/hardhat-ethers'
 import { ethers } from 'hardhat'
 
-const DISTRIBUTOR_INIT_BALANCE = 1000000
-
 interface MerkleData {
   merkleRoot: string
 }
@@ -25,6 +23,21 @@ export const getLocalMerkleRoot = () => {
   return root
 }
 
+export const getTotalDistributionAmount = () => {
+  // Read the JSON file
+  const data = fs.readFileSync('./outputFiles/allowListObj.json', 'utf-8')
+
+  // Parse the JSON data
+  const jsonData: { [key: string]: number } = JSON.parse(data)
+
+  // Sum all amounts
+  let sum = 0
+  Object.values(jsonData).forEach((amount) => {
+    sum += amount
+  })
+  return sum
+}
+
 async function main() {
   // Deploy example token
   const tokenFactory = await ethers.getContractFactory('TestERC20')
@@ -36,19 +49,22 @@ async function main() {
   const MerkleDistributor = await ethers.getContractFactory('MerkleDistributor')
   const merkleDistributor = await MerkleDistributor.deploy(
     token.address,
-    process.env.DEPLOY_ROOT === 'local' ? getLocalMerkleRoot() : process.env.DEPLOY_ROOT,
+    process.env.DEPLOY_ROOT === 'local' || process.env.DEPLOY_ROOT === undefined
+      ? getLocalMerkleRoot()
+      : process.env.DEPLOY_ROOT,
     process.env.TX_SIGNER_ADDRESS
   )
   await merkleDistributor.deployed()
   console.log(`merkleDistributor deployed at ${merkleDistributor.address}`)
 
   // set Balance for distributor to a million
-  await token.setBalance(merkleDistributor.address, DISTRIBUTOR_INIT_BALANCE)
-  console.log(`Set Distributor balance to ${DISTRIBUTOR_INIT_BALANCE}`)
+  const distributorInitBalance = process.env.DISTRIBUTOR_INIT_BALANCE ?? getTotalDistributionAmount()
+  await token.setBalance(merkleDistributor.address, distributorInitBalance)
+  console.log(`Set Distributor balance to ${distributorInitBalance}`)
 
   // Save deployed addresses in the outputFiles
   fs.writeFileSync(
-    `outputFiles/deployment-${new Date().toISOString()}`,
+    `outputFiles/deployment-${new Date().toISOString()}.json`,
     JSON.stringify({ tokenAddress: token.address, merkleDistributorAddress: merkleDistributor.address })
   )
 }
