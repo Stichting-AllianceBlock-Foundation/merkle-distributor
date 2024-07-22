@@ -58,12 +58,12 @@ module.exports = {
     polygonAmoy: {
       chainId: Number(NEXERA_CHAINS.POLYGON_AMOY),
       url: `${process.env.AMOY_PROVIDER_URL}`,
-      accounts: { mnemonic: process.env.TEST_MNEMONIC },
+      accounts: { mnemonic: process.env.DEPLOYMENT_MNEMONIC },
     },
     sepolia: {
       chainId: Number(NEXERA_CHAINS.SEPOLIA),
       url: process.env.SEPOLIA_PROVIDER_URL,
-      accounts: { mnemonic: process.env.TEST_MNEMONIC },
+      accounts: { mnemonic: process.env.DEPLOYMENT_MNEMONIC },
     },
   },
 }

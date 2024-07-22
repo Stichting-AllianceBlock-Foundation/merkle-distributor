@@ -22,7 +22,7 @@
     "precompile": "rimraf ./build/",
     "compile": "npx hardhat compile",
     "generate-merkle-root": "ts-node scripts/generate-merkle-root.ts",
-    "generate-merkle-root:input": "ts-node scripts/generate-merkle-root.ts --input inputFiles/allowListObj.json",
+    "generate-merkle-root:input": "ts-node scripts/generate-merkle-root.ts --input outputFiles/allowListObj.json",
     "convert-csv-to-json": "ts-node scripts/convert-csv-to-json.ts",
     "prepublishOnly": "yarn test",
     "pretest": "yarn compile",

@@ -46,6 +46,6 @@ async function convertCsvToJson(csvFilePath: string, jsonFilePath: string) {
 
 // Example usage
 const csvFilePath = 'inputFiles/listInput.csv' // Path to your CSV file
-const jsonFilePath = 'inputFiles/allowListObj.json' // Path to the output JSON file
+const jsonFilePath = 'outputFiles/allowListObj.json' // Path to the output JSON file
 
 convertCsvToJson(csvFilePath, jsonFilePath)
