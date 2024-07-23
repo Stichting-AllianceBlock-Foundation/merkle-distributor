@@ -1,7 +1,17 @@
 # nexera-id-kyc-airdrop
 
-[![Tests](https://github.com/Stichting-AllianceBlock-Foundation/merkle-distributor/workflows/Tests/badge.svg)](https://github.com/Stichting-AllianceBlock-Foundation/merkle-distributor/actions?query=workflow%3ATests)
-[![Lint](https://github.com/Stichting-AllianceBlock-Foundation/merkle-distributor/workflows/Lint/badge.svg)](https://github.com/Stichting-AllianceBlock-Foundation/merkle-distributor/actions?query=workflow%3ALint)
+## How to use this
+
+1. Clone <https://github.com/NexeraProtocol/nexera-id-kyc-airdrop>
+2. Replace 'inputFiles/listInput.csv' with your CSV file of addresses with corresponding amounts
+3. Add your networks to hardhat.config.ts and package.json lile we did for Sepolia and Amoy
+4. Set up env
+  a. DEPLOYMENT_MNEMONIC with your deployment mnemonic
+  b. TX_SIGNER_ADDRESS with our prod signing address: "0x03DF23c4dEA7B52Daf9B7920Ec6CFeDFFA691689"
+  c. set DEPLOY_ROOT to "local" to use your input allowList
+  d. add rpc providers url such as AMOY_PROVIDER_URL or SEPOLIA_PROVIDER_URL
+5. Run deployment command "deploy-{nameOfNetwork}" as shown in package.json
+6. Use the same address list json in front end to generate merkle proofs to claim tokens, as per shown in our example
 
 ## Local Development
 
@@ -25,10 +35,20 @@ Run `yarn deploy-polygonAmoy`or `yarn deploy-sepolia`
 
 ### Amoy
 
-Example token deployed at 0x187814D67815a1b07781D8084bEfC60C5BF76786
-merkleDistributor deployed at 0xed8899dC0773B27C42130483d67b6cEaee915923
+**Live**
+Example token deployed at 0x4Ae0B2Ed56b681ABcfb19A6aAAb921b35b531276
+merkleDistributor deployed at 0x3d95361Fa0d4E83Ac553b359197748baA1226307
+
+**Local Testing**
+Example token deployed at 0x20487A4F07B733f6Ed4DCF61AceEC0D647c521eC
+merkleDistributor deployed at 0x3703eF2fF956E80a4392Cd53dB1880891075B364
 
 ### Sepolia
 
-Example token deployed at 0x1dE19c9Da1D6ef4D4Db6Dc0Fe7cFB508f1505003
-merkleDistributor deployed at 0x93bdAB0468d0Dbb79F398A872fCa6F883B6945AD
+**Live**
+Example token deployed at 0x48182d21869b874BabdeCC0851dDA4F89B18a687
+merkleDistributor deployed at 0x96caF7D5DD0304976A070804074E453887BE509c
+
+**Local Testing**
+Example token deployed at 0x77DEBBF6Bb3A1F899333ef096217505DDC80433c
+merkleDistributor deployed at 0x130089FD95cD9Ff9119d0Df3afdbC6dA1bB87045
