@@ -3,15 +3,15 @@
 ## How to use this
 
 1. Clone <https://github.com/NexeraProtocol/nexera-id-kyc-airdrop>
-2. Replace 'inputFiles/listInput.csv' with your CSV file of addresses with corresponding amounts
-3. Add your networks to hardhat.config.ts and package.json lile we did for Sepolia and Amoy
+2. Replace `inputFiles/listInput.csv` with your CSV file of addresses with corresponding amounts
+3. Add your networks to hardhat.config.ts and package.json like we did for Sepolia and Amoy
 4. Set up env
   a. DEPLOYMENT_MNEMONIC with your deployment mnemonic
   b. TX_SIGNER_ADDRESS with our prod signing address: "0x03DF23c4dEA7B52Daf9B7920Ec6CFeDFFA691689"
   c. set DEPLOY_ROOT to "local" to use your input allowList
   d. add rpc providers url such as AMOY_PROVIDER_URL or SEPOLIA_PROVIDER_URL
-5. Run deployment command "deploy-{nameOfNetwork}" as shown in package.json
-6. Use the same address list json in front end to generate merkle proofs to claim tokens, as per shown in our example
+5. Run deployment command `yarn deploy-{nameOfNetwork}` as shown in package.json
+6. Use the generated file `./outputFiles/allowListObj.json` in your front end to generate merkle proofs to claim tokens, as per shown in our example
 
 ## Local Development
 
