@@ -11,7 +11,7 @@
   c. set DEPLOY_ROOT to "local" to use your input allowList
   d. add rpc providers url such as AMOY_PROVIDER_URL or SEPOLIA_PROVIDER_URL
 5. Run deployment command `yarn deploy-{nameOfNetwork}` as shown in package.json
-6. Use the generated file `./outputFiles/allowListObj.json` in your front end to generate merkle proofs to claim tokens, as per shown in our example
+6. Use the generated file `./outputFiles/allowListObj.json` in your front end to generate merkle proofs to claim tokens, as per shown in our example (the order of the keys matter in this case).
 
 ## Local Development
 

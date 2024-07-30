@@ -33,8 +33,16 @@ async function convertCsvToJson(csvFilePath: string, jsonFilePath: string) {
           jsonObject[record.Account] = parseInt(record.Alocation, 10)
         })
 
+        // Sort the keys of the JSON object
+        const sortedJsonObject = Object.keys(jsonObject)
+          .sort()
+          .reduce((acc, key) => {
+            acc[key] = jsonObject[key]
+            return acc
+          }, {} as { [key: string]: number })
+
         // Write the JSON object to a file
-        fs.writeFileSync(jsonFilePath, JSON.stringify(jsonObject, null, 2))
+        fs.writeFileSync(jsonFilePath, JSON.stringify(sortedJsonObject, null, 2))
 
         console.log('CSV has been converted to JSON successfully!')
       }
