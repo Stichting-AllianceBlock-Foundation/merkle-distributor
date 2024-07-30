@@ -1,15 +1,17 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-pragma solidity =0.8.17;
+pragma solidity ^0.8.20;
 
-import {IERC20, SafeERC20} from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
-import {MerkleProof} from "@openzeppelin/contracts/utils/cryptography/MerkleProof.sol";
-import {IMerkleDistributor} from "./interfaces/IMerkleDistributor.sol";
+import {IERC20, SafeERC20} from '@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol';
+import {MerkleProof} from '@openzeppelin/contracts/utils/cryptography/MerkleProof.sol';
+import '@nexeraprotocol/nexera-id-sig-gating-contracts/contracts/sigVerifiers/TxAuthDataVerifier.sol';
+
+import {IMerkleDistributor} from './interfaces/IMerkleDistributor.sol';
 
 error InvalidToken();
 error AlreadyClaimed();
 error InvalidProof(bytes32 merkleRoot);
 
-contract MerkleDistributor is IMerkleDistributor {
+contract MerkleDistributor is IMerkleDistributor, TxAuthDataVerifier {
     using SafeERC20 for IERC20;
 
     uint256 private constant WORD_SIZE = 256;
@@ -20,7 +22,7 @@ contract MerkleDistributor is IMerkleDistributor {
     // This is a packed array of booleans.
     mapping(uint256 => uint256) private claimedBitMap;
 
-    constructor(address token_, bytes32 merkleRoot_) {
+    constructor(address token_, bytes32 merkleRoot_, address signerAddress) TxAuthDataVerifier(signerAddress) {
         if (token_ == address(0)) revert InvalidToken();
 
         token = token_;
@@ -41,11 +43,12 @@ contract MerkleDistributor is IMerkleDistributor {
         claimedBitMap[claimedWordIndex] = claimedBitMap[claimedWordIndex] | (1 << claimedBitIndex);
     }
 
-    function claim(uint256 index, address account, uint256 amount, bytes32[] calldata merkleProof)
-        public
-        virtual
-        override
-    {
+    function claim(
+        uint256 index,
+        address account,
+        uint256 amount,
+        bytes32[] calldata merkleProof
+    ) public virtual override requireTxDataAuth {
         if (isClaimed(index)) revert AlreadyClaimed();
 
         // Verify the merkle proof.

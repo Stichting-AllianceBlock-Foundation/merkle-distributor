@@ -1,15 +1,16 @@
 {
-  "name": "@allianceblock/merkle-distributor",
+  "name": "nexera-id-kyc-airdrop",
   "version": "1.0.1",
-  "description": "📦 A smart contract that distributes a balance of tokens according to a merkle root",
+  "description": "📦 A smart contract that distributes a balance of tokens according to a merkle root, gated by Nexera ID",
   "keywords": [
-    "allianceblock",
-    "erc20"
+    "nexera",
+    "erc20",
+    "signature gating"
   ],
-  "homepage": "https://allianceblock.io",
+  "homepage": "https://nexera.id",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Stichting-AllianceBlock-Foundation/merkle-distributor"
+    "url": "https://github.com/NexeraProtocol/nexera-id-kyc-airdrop"
   },
   "author": {
     "name": "Moody Salem"
@@ -21,15 +22,22 @@
     "precompile": "rimraf ./build/",
     "compile": "npx hardhat compile",
     "generate-merkle-root": "ts-node scripts/generate-merkle-root.ts",
-    "generate-merkle-root:example": "ts-node scripts/generate-merkle-root.ts --input scripts/example.json",
+    "generate-merkle-root:input": "ts-node scripts/generate-merkle-root.ts --input outputFiles/allowListObj.json",
+    "convert-csv-to-json": "ts-node scripts/convert-csv-to-json.ts",
+    "prepare-merkle-root": "yarn convert-csv-to-json && yarn generate-merkle-root:input",
     "prepublishOnly": "yarn test",
     "pretest": "yarn compile",
-    "test": "npx hardhat test"
+    "test": "npx hardhat test",
+    "deploy-polygonAmoy": "yarn prepare-merkle-root && yarn hardhat run ./scripts/deployTokenAndMerkleDistributor.ts --network polygonAmoy",
+    "deploy-sepolia": "yarn prepare-merkle-root && yarn hardhat run ./scripts/deployTokenAndMerkleDistributor.ts --network sepolia"
   },
   "dependencies": {
+    "@nexeraprotocol/nexera-id-sig-gating-contracts": "^2.2.45",
+    "@nexeraprotocol/nexera-id-sig-gating-contracts-sdk": "^2.0.22",
     "@openzeppelin/contracts": "4.7.0"
   },
   "devDependencies": {
+    "@nomicfoundation/hardhat-verify": "^2.0.8",
     "@nomiclabs/hardhat-ethers": "^2.0.6",
     "@nomiclabs/hardhat-waffle": "^2.0.3",
     "@types/chai": "^4.2.6",
@@ -37,11 +45,12 @@
     "axios": "^0.20.0",
     "chai": "^4.2.0",
     "commander": "^6.1.0",
+    "csv-parse": "^5.5.6",
     "dotenv": "^16.0.1",
     "ethereum-waffle": "^3.0.0",
     "ethereumjs-util": "^7.0.4",
     "ethers": "5.6.9",
-    "hardhat": "^2.9.9",
+    "hardhat": "^2.22.6",
     "mocha": "^6.2.2",
     "prettier": "^2.0.5",
     "rimraf": "^3.0.0",

@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-pragma solidity =0.8.17;
+pragma solidity =0.8.20;
 
-import {MerkleDistributor} from "./MerkleDistributor.sol";
-import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
-import {IERC20, SafeERC20} from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
+import {MerkleDistributor} from './MerkleDistributor.sol';
+import {Ownable} from '@openzeppelin/contracts/access/Ownable.sol';
+import {IERC20, SafeERC20} from '@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol';
 
 error EndTimeInPast();
 error ClaimWindowFinished();
@@ -14,7 +14,12 @@ contract MerkleDistributorWithDeadline is MerkleDistributor, Ownable {
 
     uint256 public immutable endTime;
 
-    constructor(address token_, bytes32 merkleRoot_, uint256 endTime_) MerkleDistributor(token_, merkleRoot_) {
+    constructor(
+        address token_,
+        bytes32 merkleRoot_,
+        uint256 endTime_,
+        address signerAddress
+    ) MerkleDistributor(token_, merkleRoot_, signerAddress) {
         if (endTime_ <= block.timestamp) revert EndTimeInPast();
         endTime = endTime_;
     }

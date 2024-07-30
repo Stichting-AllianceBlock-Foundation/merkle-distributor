@@ -6,7 +6,8 @@ async function main() {
   const MerkleDistributor = await ethers.getContractFactory('MerkleDistributor')
   const merkleDistributor = await MerkleDistributor.deploy(
     process.env.DEPLOY_TOKEN,
-    process.env.DEPLOY_ROOT
+    process.env.DEPLOY_ROOT,
+    process.env.TX_SIGNER_ADDRESS
   )
   await merkleDistributor.deployed()
   console.log(`merkleDistributor deployed at ${merkleDistributor.address}`)
